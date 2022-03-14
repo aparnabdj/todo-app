@@ -20,13 +20,14 @@ inputValue.addEventListener("input",view);
 
 //functions
 
+//function to add element in a list
 function addTodo(event){
     //prevent form from submitting
     event.preventDefault();
-     // Todo Div
+     // Creating div element
      const todoDiv=document.createElement("div");
      todoDiv.classList.add("todo");
-     //create LI
+     //create TextInput 
      const newTodo=document.createElement("input");
      newTodo.value=todoInput.value;
      newTodo.classList.add("todo-item");
@@ -34,22 +35,22 @@ function addTodo(event){
      newTodo.setAttribute("readonly","readonly");
      todoDiv.appendChild(newTodo);
     
-     //saving new values in local storage
+    //saving new values in local storage
     saveLocalTodos(todoInput.value);
 
-     //check button
+     //adding check button with new task
      const completedButton=document.createElement("button");
      completedButton.innerHTML="<i class='fa fa-check'></i>";
      completedButton.classList.add("complete-btn");
      todoDiv.appendChild(completedButton);
 
-     //trash button
+     //adding trash button with new task
      const trashButton=document.createElement("button");
      trashButton.innerHTML="<i class='fa fa-trash'></i>";
      trashButton.classList.add("trash-btn");
      todoDiv.appendChild(trashButton);
 
-    //edit button
+    //adding edit button with new task
     const editButton=document.createElement("button");
     editButton.innerHTML="<i class='fa-solid fa-pen-to-square'></i>";
     editButton.classList.add("edit-btn");
@@ -63,10 +64,11 @@ function addTodo(event){
     todoInput.value="";
 }
 let text;
+//function to delete,check or edit a task
 function deleteCheckEdit(e)
 {
      const item =e.target;
-     //delete button
+     //if delete button is pressed
      if(item.classList[0]==="trash-btn"){
         const todo=item.parentElement; 
         todo.classList.add("fall");
@@ -77,7 +79,7 @@ function deleteCheckEdit(e)
         
      }
 
-     //check button
+     //if check button is pressed
      if(item.classList[0]==="complete-btn"){
         
          const todo=item.parentElement;
@@ -85,12 +87,12 @@ function deleteCheckEdit(e)
          completedTodos(todo);
      } 
 
-     //edit button
+     //if edit button is pressed
      
      const todo=item.parentElement;
      const newTodo=item.previousElementSibling.previousElementSibling.previousElementSibling; 
     
-    
+    //if edit button is pressed as edit
      if(item.classList[0]==="edit-btn")
      {   text=newTodo.value;
         newTodo.removeAttribute("readonly");
@@ -99,6 +101,7 @@ function deleteCheckEdit(e)
         item.classList.toggle("save-btn");
         item.classList.remove("edit-btn");
         } 
+        //if edit button is pressed as save
         else if(item.classList[0]==="save-btn")
         {   
             newTodo.setAttribute("readonly","readonly");
@@ -108,7 +111,7 @@ function deleteCheckEdit(e)
             editLocalTodos(todo,text);
         }
 }
- 
+ //function to filter the task
 function filterTodo(e){
     const todos=todoList.childNodes;
     todos.forEach(function(todo){
@@ -139,7 +142,7 @@ function filterTodo(e){
         }
     });
 }
-
+//function to save the tasks in local storage
 function saveLocalTodos(todo){
     let todos;
     if(localStorage.getItem("todos")===null){
@@ -151,7 +154,7 @@ function saveLocalTodos(todo){
     todos.push({"todo":todo,"completed":false});
     localStorage.setItem("todos",JSON.stringify(todos));  
 }
-
+//function to get the tasks from local storage and print
  function getTodos()
  {
     let todos;
@@ -164,7 +167,7 @@ function saveLocalTodos(todo){
     todos.forEach(function(todo){
         const todoDiv=document.createElement("div");
         todoDiv.classList.add("todo");
-        //create LI
+        //create text input
         const newTodo=document.createElement("input");
         newTodo.type="text";
         newTodo.value=todo.todo;
@@ -199,7 +202,7 @@ function saveLocalTodos(todo){
        todoList.appendChild(todoDiv);
     });
  }
-
+// removing task from local storage after deletion
  function removeLocalTodos(todo)
  {
     let todos;
@@ -213,6 +216,8 @@ function saveLocalTodos(todo){
     todos.splice(todos.indexOf(todoIndex),1);
     localStorage.setItem("todos", JSON.stringify(todos));
  }
+
+ //function to update the new value in localstorage after edit
  function editLocalTodos(todo,text)
  {
     let todos;
@@ -231,6 +236,8 @@ function saveLocalTodos(todo){
     console.log(todos);
     localStorage.setItem("todos", JSON.stringify(todos));
  }
+
+ //function to store in local storage the status of the task
 function completedTodos(todo){
     let todos;
     if(localStorage.getItem("todos")===null){
@@ -256,11 +263,15 @@ function completedTodos(todo){
     }
     localStorage.setItem("todos",JSON.stringify(todos)); 
 }
+
+//function to remove all from the local storage
  function removeAll()
  {
     todoList.innerHTML="";
     localStorage.removeItem("todos");
  }
+
+ //function to search an item from the local storage and see if its available
  function searchItem(e){
     const todos1=todoList.childNodes;
     const searchText=inputValue.value.toLowerCase();
@@ -284,6 +295,8 @@ function completedTodos(todo){
     i++;
     });
  }
+
+ //function to print the elements on the screen
  function view(){
     const searchText=inputValue.value.toLowerCase();
       const todos=todoList.childNodes;

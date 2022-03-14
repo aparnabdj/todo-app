@@ -74,7 +74,7 @@ form button:hover{
 .todo-item{
     padding:0rem 0.5rem; 
 }
-.fa-trash, .fa-check, .fa-pen-to-square, .fa-magnifying-glass, .fa-save{
+.fa-trash, .fa-check, .fa-pen-to-square, .fa-magnifying-glass, .fa-save`{
 pointer-events: none;
 }
 .completed{
